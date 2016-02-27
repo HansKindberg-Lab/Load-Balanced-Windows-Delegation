@@ -1,0 +1,79 @@
+﻿@model MvcApplication.Models.ViewModels.HomeModel
+@section MainContent
+{
+	<h1>Load-balanced windows-delegation testing</h1>
+	<p>
+		<strong>Set up: </strong><a href="https://www.f5.com/pdf/deployment-guides/kerberos-constrained-delegation-dg.pdf" target="_blank">https://www.f5.com/pdf/deployment-guides/kerberos-constrained-delegation-dg.pdf</a>
+	</p>
+	<div class="row">
+		<div class="col-md-9">
+			@Html.Partial("~/Views/Shared/SystemInformation.cshtml", Model.SystemInformation, new ViewDataDictionary())
+			@if(Model.ApplicationFile != null)
+			{
+				<p>
+					<strong>File-path: </strong>@Model.ApplicationFile.Path
+				</p>
+				<p>
+					<strong>File-content: </strong>
+					<br />
+					@Html.Raw(Model.Content)
+				</p>
+			}
+			@using(Html.BeginForm("Index", "Home"))
+			{
+				@Html.LabelFor(model => model.Form.Text)
+				<br />
+				@Html.TextAreaFor(model => model.Form.Text)
+				<br />
+				<button type="submit">Save</button>
+			}
+			@using(Html.BeginForm("Clear", "Home"))
+			{
+				<br />
+				<button type="submit">Clear</button>
+			}
+		</div>
+		<div class="col-md-3 alert alert-block alert-info">
+			<h3>Http-context-identity</h3>
+			<p>
+				<strong>Name: </strong>@Model.ContextIdentity.Name
+			</p>
+			<p>
+				<strong>Authentication-type: </strong>@Model.ContextIdentity.AuthenticationType
+			</p>
+			<p>
+				<strong>Is authenticated: </strong>@Model.ContextIdentity.IsAuthenticated
+			</p>
+			<h3>Thread-identity</h3>
+			<p>
+				<strong>Name: </strong>@Model.ThreadIdentity.Name
+			</p>
+			<p>
+				<strong>Authentication-type: </strong>@Model.ThreadIdentity.AuthenticationType
+			</p>
+			<p>
+				<strong>Is authenticated: </strong>@Model.ThreadIdentity.IsAuthenticated
+			</p>
+			<h3>Windows-identity</h3>
+			<p>
+				<strong>Name: </strong>@Model.WindowsIdentity.Name
+			</p>
+			<p>
+				<strong>Authentication-type: </strong>@Model.WindowsIdentity.AuthenticationType
+			</p>
+			<p>
+				<strong>Is authenticated: </strong>@Model.WindowsIdentity.IsAuthenticated
+			</p>
+			<h3>Impersonated identity</h3>
+			<p>
+				<strong>Name: </strong>@Model.ImpersonatedIdentity.Name
+			</p>
+			<p>
+				<strong>Authentication-type: </strong>@Model.ImpersonatedIdentity.AuthenticationType
+			</p>
+			<p>
+				<strong>Is authenticated: </strong>@Model.ImpersonatedIdentity.IsAuthenticated
+			</p>
+		</div>
+	</div>
+}

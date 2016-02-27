@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication", "MvcApplication\MvcApplication.csproj", "{86E0F457-0C41-4543-B179-8D65C35546FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{E0BA0526-E360-47D7-A6F2-16EE72BBB5D0}"
+	ProjectSection(SolutionItems) = preProject
+		CodeAnalysis\Solution.ruleset = CodeAnalysis\Solution.ruleset
+		CodeAnalysis\Solution.Tests.ruleset = CodeAnalysis\Solution.Tests.ruleset
+		CodeAnalysis\SolutionDictionary.xml = CodeAnalysis\SolutionDictionary.xml
+		CodeAnalysis\SolutionSuppressions.cs = CodeAnalysis\SolutionSuppressions.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{7C77E4C8-1E09-4449-87CC-9114519ED5D2}"
+	ProjectSection(SolutionItems) = preProject
+		Properties\Solution-AssemblyInfo.cs = Properties\Solution-AssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Signing", "Signing", "{5E7EB4B1-7EC5-4955-9101-C5DC8890E0BC}"
+	ProjectSection(SolutionItems) = preProject
+		Signing\ReadMe.txt = Signing\ReadMe.txt
+		Signing\StrongName.Development.snk = Signing\StrongName.Development.snk
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{5A88F9C3-4D61-47FC-92CE-227A83CE7998}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86E0F457-0C41-4543-B179-8D65C35546FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86E0F457-0C41-4543-B179-8D65C35546FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86E0F457-0C41-4543-B179-8D65C35546FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86E0F457-0C41-4543-B179-8D65C35546FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

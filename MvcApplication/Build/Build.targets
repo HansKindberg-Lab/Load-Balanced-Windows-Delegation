@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<BuildDependsOn>
+			TransformApplicationHostConfiguration;
+			$(BuildDependsOn);
+		</BuildDependsOn>
+		<CopyAllFilesToSingleFolderForPackageDependsOn>
+			ExcludeFilesOnPublish;
+			IncludeFilesOnPublish;
+			$(CopyAllFilesToSingleFolderForPackageDependsOn);
+		</CopyAllFilesToSingleFolderForPackageDependsOn>
+		<CoreBuildDependsOn>
+			ResolveSigning;
+			$(CoreBuildDependsOn);
+		</CoreBuildDependsOn>
+	</PropertyGroup>
+	<Target Name="ExcludeFilesOnPublish" BeforeTargets="ExcludeFilesFromPackage">
+		<!--
+		<ItemGroup>
+			<FileToExcludeFromPackage Include="bin\Some.dll" />
+		</ItemGroup>
+		-->
+		<ItemGroup>
+			<ExcludeFromPackageFiles Include="@(FileToExcludeFromPackage)">
+				<FromTarget>Project</FromTarget>
+			</ExcludeFromPackageFiles>
+		</ItemGroup>
+		<Message
+			Importance="high"
+			Text="Excluding following files from package: @(FileToExcludeFromPackage->'%(RelativeDir)%(RecursiveDir)%(Filename)%(Extension)')"
+		/>
+	</Target>
+	<Target Name="IncludeFilesOnPublish">
+		<!--
+		<ItemGroup>
+			<SomeFile Include="$(SolutionDir)\SomeFile.txt" />
+			<FilesForPackagingFromProject Include="@(SomeFile)">
+				<DestinationRelativePath>\%(Filename)%(Extension)</DestinationRelativePath>
+			</FilesForPackagingFromProject>
+			<FileToIncludeInPackage Include="@(SomeFile)" />
+		</ItemGroup>
+		<Message
+			Importance="high"
+			Text="Including following files in package: @(FileToIncludeInPackage->'%(RelativeDir)%(RecursiveDir)%(Filename)%(Extension)')"
+		/>
+		-->
+	</Target>
+	<Target Name="ResolveSigning">
+		<PropertyGroup>
+			<SignWithDevelopmentKey Condition="!Exists($(AssemblyOriginatorKeyFile))">true</SignWithDevelopmentKey>
+		</PropertyGroup>
+		<Warning
+			Condition="$(SignWithDevelopmentKey)"
+			Text="Sign warning. The strong-name-key-file '$(AssemblyOriginatorKeyFile)' does not exist. The assembly will be signed with a development-key."
+		/>
+		<PropertyGroup>
+			<AssemblyOriginatorKeyFile Condition="$(SignWithDevelopmentKey)">$(SolutionDir)Signing\$(StrongNameDevelopmentKeyFile)</AssemblyOriginatorKeyFile>
+		</PropertyGroup>
+	</Target>
+	<Target Name="TransformApplicationHostConfiguration">
+		<PropertyGroup>
+			<ApplicationHostConfigurationFile>$(SolutionDir).vs\config\ApplicationHost.config</ApplicationHostConfigurationFile>
+			<ApplicationHostConfigurationFileTransformationXPathPrefix>/configuration/configSections/sectionGroup[@name='system.webServer']/sectionGroup[@name='security']/sectionGroup[@name='authentication']/</ApplicationHostConfigurationFileTransformationXPathPrefix>
+		</PropertyGroup>
+		<ItemGroup>
+			<ApplicationHostConfigurationFileTransformation Include="First">
+				<Value>Allow</Value>
+				<XPath>$(ApplicationHostConfigurationFileTransformationXPathPrefix)section[@name='anonymousAuthentication']/@overrideModeDefault</XPath>
+			</ApplicationHostConfigurationFileTransformation>
+			<ApplicationHostConfigurationFileTransformation Include="Second">
+				<Value>Allow</Value>
+				<XPath>$(ApplicationHostConfigurationFileTransformationXPathPrefix)section[@name='windowsAuthentication']/@overrideModeDefault</XPath>
+			</ApplicationHostConfigurationFileTransformation>
+		</ItemGroup>
+		<Message
+			Condition="Exists('$(ApplicationHostConfigurationFile)')"
+			Importance="high"
+			Text="Transforming '$(ApplicationHostConfigurationFile)'."
+		/>
+		<!--
+		<XmlPeek
+			Query="%(ApplicationHostConfigurationFileTransformation.XPath)"
+			XmlInputPath="$(ApplicationHostConfigurationFile)"
+		>
+			<Output TaskParameter="Result" ItemName="XmlPeekResult" />
+		</XmlPeek>
+		<Message
+			Importance="high"
+			Text=" - XmlPeekResult: %(XmlPeekResult.Identity)"
+		/>
+		-->
+		<XmlPoke
+			Condition="Exists('$(ApplicationHostConfigurationFile)')"
+			Query="%(ApplicationHostConfigurationFileTransformation.XPath)"
+			Value="%(ApplicationHostConfigurationFileTransformation.Value)"
+			XmlInputPath="$(ApplicationHostConfigurationFile)"
+		/>
+	</Target>
+</Project>

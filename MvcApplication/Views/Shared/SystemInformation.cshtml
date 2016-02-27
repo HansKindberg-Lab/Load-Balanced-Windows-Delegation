@@ -1,0 +1,24 @@
+﻿@using MvcApplication.Business.Extensions
+@model MvcApplication.Business.ISystemInformation
+@if(Model != null)
+{
+	<div class="@Model.CssClass()">
+		@if(!string.IsNullOrEmpty(Model.Heading))
+		{
+			<h2>@Model.Heading</h2>
+		}
+		@if(!string.IsNullOrEmpty(Model.Information))
+		{
+			<p>@Html.Raw(Model.Information)</p>
+		}
+		@if(Model.DetailedInformation != null && Model.DetailedInformation.Any())
+		{
+			<ul>
+				@foreach(string detail in Model.DetailedInformation)
+				{
+					<li>@Html.Raw(detail)</li>
+				}
+			</ul>
+		}
+	</div>
+}
