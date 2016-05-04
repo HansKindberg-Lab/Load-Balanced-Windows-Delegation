@@ -132,8 +132,8 @@
     <Compile Include="..\Properties\Solution-AssemblyInfo.cs">
       <Link>Properties\Solution-AssemblyInfo.cs</Link>
     </Compile>
-    <Content Include="Build\Build.props" />
-    <Content Include="Build\Build.targets" />
+    <None Include="Build\Build.props" />
+    <None Include="Build\Build.targets" />
     <Compile Include="Business\InversionOfControl\Registry.cs" />
     <Compile Include="Business\StructureMap\StructureMapDependencyResolver.cs" />
     <CodeAnalysisDictionary Include="CodeAnalysis\AssemblyDictionary.xml" />
