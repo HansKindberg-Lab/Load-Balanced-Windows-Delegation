@@ -14,6 +14,7 @@ namespace MvcApplication.Business.Security.Principal
 		#region Properties
 
 		public virtual string AuthenticationType => this.WrappedInstance.AuthenticationType;
+		public virtual TokenImpersonationLevel ImpersonationLevel => this.WrappedInstance.ImpersonationLevel;
 		public virtual bool IsAuthenticated => this.WrappedInstance.IsAuthenticated;
 		public virtual string Name => this.WrappedInstance.Name;
 

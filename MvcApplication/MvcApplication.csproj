@@ -152,6 +152,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Content Include="log4net.config" />
     <None Include="packages.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -163,6 +164,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\SystemInformation.cshtml" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

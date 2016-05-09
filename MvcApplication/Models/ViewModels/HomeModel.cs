@@ -75,6 +75,7 @@ namespace MvcApplication.Models.ViewModels
 		{
 			get
 			{
+				// ReSharper disable InvertIf
 				if(this._impersonatedIdentity == null)
 				{
 					using(this.HttpContext.User.Impersonate())
@@ -89,6 +90,7 @@ namespace MvcApplication.Models.ViewModels
 						};
 					}
 				}
+				// ReSharper restore InvertIf
 
 				return this._impersonatedIdentity;
 			}

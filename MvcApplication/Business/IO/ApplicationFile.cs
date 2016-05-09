@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Security.Principal;
 using MvcApplication.Business.Configuration;
 using MvcApplication.Business.Security.Principal;
 using MvcApplication.Business.Security.Principal.Extensions;
@@ -134,15 +136,26 @@ namespace MvcApplication.Business.IO
 
 		protected internal virtual void CreateFileIfNecessary()
 		{
-			var file = this.FileSystem.FileInfo.FromFileName(this.Path);
+			try
+			{
+				var file = this.FileSystem.FileInfo.FromFileName(this.Path);
 
-			if(file.Exists)
-				return;
+				if(file.Exists)
+					return;
 
-			if(!file.Directory.Exists)
-				file.Directory.Create();
+				if(!file.Directory.Exists)
+					file.Directory.Create();
 
-			this.FileSystem.File.WriteAllText(this.Path, string.Empty);
+				this.FileSystem.File.WriteAllText(this.Path, string.Empty);
+			}
+			catch(Exception exception)
+			{
+				var windowsIdentity = WindowsIdentity.GetCurrent();
+
+				// ReSharper disable PossibleNullReferenceException
+				throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Could not create file if necessary for path \"{0}\". Current windows-identity: \"{1}\" (authentication-type: {2}, impersonation-level: {3}).", this.Path, windowsIdentity.Name, windowsIdentity.AuthenticationType, windowsIdentity.ImpersonationLevel), exception);
+				// ReSharper restore PossibleNullReferenceException
+			}
 		}
 
 		public virtual void TryRead()

@@ -14,7 +14,20 @@ namespace MvcApplication.Business.Security.Principal.Extensions
 
 			var windowsPrincipal = principal as IWindowsPrincipal;
 
-			return windowsPrincipal != null ? windowsPrincipal.WindowsIdentity.Impersonate() : new EmptyWindowsImpersonationContextWrapper();
+			if(windowsPrincipal == null)
+			{
+				var concreteWindowsPrincipal = principal as WindowsPrincipal;
+
+				if(concreteWindowsPrincipal != null)
+					windowsPrincipal = (WindowsPrincipalWrapper) concreteWindowsPrincipal;
+			}
+
+			if(windowsPrincipal == null)
+				throw new InvalidOperationException("The principal is not a windows-principal.");
+
+			return windowsPrincipal.WindowsIdentity.Impersonate();
+
+			//return windowsPrincipal != null ? windowsPrincipal.WindowsIdentity.Impersonate() : new EmptyWindowsImpersonationContextWrapper();
 		}
 
 		#endregion
